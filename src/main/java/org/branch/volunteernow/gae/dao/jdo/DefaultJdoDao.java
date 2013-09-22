@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.HashMap;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>

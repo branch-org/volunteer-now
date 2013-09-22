@@ -3,8 +3,6 @@ package org.branch.volunteernow.gae.dao;
 import com.google.appengine.api.datastore.Key;
 import org.branch.volunteernow.model.Entity;
 
-import java.util.List;
-
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
