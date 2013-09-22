@@ -1,4 +1,6 @@
-.iml
-.ipr
+*.iml
+*.ipr
+
 .idea
+
 target
