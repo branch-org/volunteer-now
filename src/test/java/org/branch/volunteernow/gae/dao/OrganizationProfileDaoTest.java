@@ -3,6 +3,7 @@ package org.branch.volunteernow.gae.dao;
 import org.branch.volunteernow.model.Profile;
 import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.branch.volunteernow.model.jdo.OrganizationProfile;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,8 +20,6 @@ public class OrganizationProfileDaoTest extends AbstractProfileDaoTest<Organizat
     @Override
     protected void assertSave(OrganizationProfile original, OrganizationProfile saved)
     {
-        System.out.println("Original: " + original);
-        System.out.println("Saved: " + saved);
     }
 
     @Override
@@ -28,6 +27,7 @@ public class OrganizationProfileDaoTest extends AbstractProfileDaoTest<Organizat
     {
         final OrganizationProfile profile = new OrganizationProfile();
         profile.setName("Name1");
+        profile.setMission("Mission1");
 
         return profile;
     }

@@ -19,8 +19,6 @@ public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile>
     @Override
     protected void assertSave(MemberProfile original, MemberProfile saved)
     {
-        System.out.println("Original: " + original);
-        System.out.println("Saved: " + saved);
     }
 
     @Override

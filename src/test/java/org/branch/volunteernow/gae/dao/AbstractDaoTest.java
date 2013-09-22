@@ -41,17 +41,9 @@ public abstract class AbstractDaoTest<T extends Entity>
 
         Assert.assertNotNull(saved);
         Assert.assertNotNull(saved.getId());
+        Assert.assertEquals(original, saved);
 
         assertSave(original, saved);
-
-        System.out.println("Saved       :" + saved);
-
-//        final MemberProfile retrieved = profileDao.get(MemberProfile.class, saved.getId());
-//        System.out.println("Retrieved   :" + retrieved);
-//
-//        Assert.assertEquals(saved.getName(), retrieved.getName());
-//        Assert.assertEquals(saved.getId(), retrieved.getId());
-//        Assert.assertEquals(saved, retrieved);
     }
 
     protected abstract void assertSave(T original, T saved);

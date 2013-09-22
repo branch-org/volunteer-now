@@ -26,24 +26,6 @@
     <build>
         <outputDirectory>${output.webInf}/classes</outputDirectory>
 
-        <resources>
-            <resource>
-                <directory>../src/main/java</directory>
-            </resource>
-            <resource>
-                <directory>../src/main/resources</directory>
-            </resource>
-        </resources>
-
-        <testResources>
-            <testResource>
-                <directory>../src/test/java</directory>
-            </testResource>
-            <testResource>
-                <directory>../src/test/resources</directory>
-            </testResource>
-        </testResources>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
