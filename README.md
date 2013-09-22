@@ -1,4 +1,2 @@
-volunteer-now
-=============
-
-VolunteerNow!
+VolunteerNow
+===========
