@@ -31,7 +31,7 @@
             <div class="nav navbar-right">
                 <c:choose>
                     <c:when test="${currentUser == null}">
-                        <a class="btn btn-success navbar-btn" href="login">Sign in</a> or <a href="login">sign up</a>
+                        <a class="btn btn-success navbar-btn" href="/login">Sign in</a> or <a href="/login">sign up</a>
                     </c:when>
                     <c:otherwise>
                         <div class="nav navbar-text dropdown">

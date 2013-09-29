@@ -32,7 +32,7 @@ public class CurrentUserInterceptor implements HandlerInterceptor
             final String thisURL = request.getRequestURI();
             if (request.getUserPrincipal() != null)
             {
-                modelAndView.getModel().put("logoutUrl", userService.createLogoutURL(thisURL));
+                modelAndView.getModel().put("logoutUrl", userService.createLogoutURL("/"));
             }
             else
             {

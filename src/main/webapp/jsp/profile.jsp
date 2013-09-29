@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>VolunteerNow!</title>
+    <title>Profile - VolunteerNow!</title>
 
     <%@include file="header.jsp" %>
 </head>
