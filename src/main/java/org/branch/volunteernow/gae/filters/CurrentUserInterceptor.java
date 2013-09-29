@@ -3,6 +3,10 @@ package org.branch.volunteernow.gae.filters;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import org.branch.volunteernow.constants.PathConstants;
+import org.branch.volunteernow.gae.dao.ProfileDao;
+import org.branch.volunteernow.model.Profile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,11 +17,32 @@ import javax.servlet.http.HttpServletResponse;
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public class CurrentUserInterceptor implements HandlerInterceptor
+public class CurrentUserInterceptor extends DefaultInterceptor implements HandlerInterceptor, PathConstants
 {
+
+    @Autowired
+    private ProfileDao profileDao;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
     {
+        final String thisURL = request.getRequestURI();
+
+        if (!URL_PROFILE_EDIT.equals(thisURL))
+        {
+            final UserService userService = UserServiceFactory.getUserService();
+            final User currentUser = userService.getCurrentUser();
+            if (currentUser != null)
+            {
+                final Profile profile = profileDao.getProfileForEmail(currentUser.getEmail());
+
+                if (profile == null)
+                {
+                    doRedirect(response, URL_PROFILE_EDIT, null);
+                }
+            }
+        }
+
         return true;
     }
 
@@ -30,7 +55,7 @@ public class CurrentUserInterceptor implements HandlerInterceptor
             final User currentUser = userService.getCurrentUser();
 
             final String thisURL = request.getRequestURI();
-            if (request.getUserPrincipal() != null)
+            if (currentUser != null)
             {
                 modelAndView.getModel().put("logoutUrl", userService.createLogoutURL("/"));
             }

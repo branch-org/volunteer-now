@@ -3,6 +3,7 @@ package org.branch.volunteernow.gae.controller;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import org.branch.volunteernow.constants.PathConstants;
 import org.branch.volunteernow.gae.dao.ProfileDao;
 import org.branch.volunteernow.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/profile")
-public class ProfileController
+public class ProfileController implements PathConstants
 {
     @Autowired
     private ProfileDao profileDao;
@@ -36,7 +37,7 @@ public class ProfileController
         final Profile profile = profileDao.getProfileForEmail(currentUser.getEmail());
         if (profile == null)
         {
-            return new ModelAndView("redirect:/profile/edit", model);
+            return new ModelAndView("redirect:" + URL_PROFILE_EDIT, model);
         }
 
         model.put("profile", profile);
