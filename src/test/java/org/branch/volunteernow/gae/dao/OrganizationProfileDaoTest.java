@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class OrganizationProfileDaoTest extends AbstractDaoTest<OrganizationProfile, OrganizationProfileDao<OrganizationProfile>>
 {
     @Override
-    protected void assertSave(OrganizationProfile original, OrganizationProfile saved)
+    protected void assertSame(OrganizationProfile expected, OrganizationProfile actual)
     {
     }
 

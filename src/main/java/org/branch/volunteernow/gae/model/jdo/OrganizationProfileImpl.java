@@ -8,7 +8,6 @@ import javax.jdo.annotations.*;
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-//@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @PersistenceCapable
 @Inheritance(strategy=InheritanceStrategy.NEW_TABLE)
 public class OrganizationProfileImpl extends AbstractEntityImpl implements OrganizationProfile

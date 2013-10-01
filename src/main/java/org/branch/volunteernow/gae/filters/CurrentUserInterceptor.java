@@ -4,6 +4,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import org.branch.volunteernow.constants.PathConstants;
+import org.branch.volunteernow.dao.MemberProfileDao;
 import org.branch.volunteernow.dao.ProfileDao;
 import org.branch.volunteernow.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CurrentUserInterceptor extends DefaultInterceptor implements Handle
 {
 
     @Autowired
-    private ProfileDao profileDao;
+    private MemberProfileDao profileDao;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception

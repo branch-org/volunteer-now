@@ -17,11 +17,11 @@
 
     <context:component-scan base-package="org.branch.volunteernow"/>
 
-    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!--<bean id="persistenceManagerFactory" class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">-->
-        <!--<property name="persistenceManagerFactoryName" value="persistence-unit"/>-->
-    <!--</bean>-->
+    <bean id="persistenceManagerFactory" class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
+        <property name="persistenceManagerFactoryName" value="persistence-unit"/>
+    </bean>
 
     <!--<bean id="persistenceManagerFactoryProxy"-->
           <!--class="org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProxy">-->
@@ -29,7 +29,7 @@
         <!--<property name="allowCreate" value="false"/>-->
     <!--</bean>-->
 
-    <!--<bean id="transactionManager" class="org.springframework.orm.jdo.JdoTransactionManager">-->
-        <!--<property name="persistenceManagerFactory" ref=""/>-->
-    <!--</bean>-->
+    <bean id="transactionManager" class="org.springframework.orm.jdo.JdoTransactionManager">
+        <property name="persistenceManagerFactory" ref="persistenceManagerFactory"/>
+    </bean>
 </beans>

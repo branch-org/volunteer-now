@@ -55,7 +55,7 @@ import java.util.Map;
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
-        return new ModelAndView(PAGE_MEMBERS_PROFILE_EDIT, model);
+        return new ModelAndView(PAGE_MEMBERS_PROFILE, model);
     }
 
     @RequestMapping(value = URL_MEMBERS_PROFILE_EDIT, method = RequestMethod.GET)

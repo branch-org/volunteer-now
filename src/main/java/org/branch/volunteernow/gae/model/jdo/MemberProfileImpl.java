@@ -4,13 +4,10 @@ import org.branch.volunteernow.model.MemberProfile;
 
 import javax.jdo.annotations.*;
 
-//@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @PersistenceCapable
-@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class MemberProfileImpl extends AbstractEntityImpl implements MemberProfile
 {
     @Persistent
-    @Unique
     private String email;
 
     @Persistent

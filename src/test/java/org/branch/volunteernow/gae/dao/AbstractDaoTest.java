@@ -8,6 +8,9 @@ import org.branch.volunteernow.model.Entity;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class AbstractDaoTest<Generic extends Entity, GenericDao extends Dao<Generic>>
 {
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+//    private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalMemcacheServiceTestConfig());
 
     private GenericDao testDao;
 
@@ -51,29 +55,54 @@ public abstract class AbstractDaoTest<Generic extends Entity, GenericDao extends
         Assert.assertNotNull(saved.getId());
         Assert.assertEquals(original, saved);
 
-        assertSave(original, saved);
+        assertSame(original, saved);
     }
 
     @Test
     public void expiration()
     {
-        final Generic original = createInstance();
-        final Generic saved = getTestDao().save(original);
+        final Generic saved = createAndSave();
 
         // This was throwing, "Object with id ... is managed by a different Object Manager"
         // This test is made to exercise cross transaction saves
-        testDao.save(saved);
+        getTestDao().save(saved);
     }
 
     @Test
-    public void findById() {
-        final Generic original = createInstance();
-        final Generic saved = getTestDao().save(original);
+    public void findById()
+    {
+        final Generic saved = createAndSave();
 
         final Generic found = getTestDao().findById(saved.getId());
+
+        Assert.assertNotNull(found);
+
+        assertSame(saved, found);
     }
 
-    protected abstract void assertSave(Generic original, Generic saved);
+    @Test
+    public void findAll()
+    {
+        final Generic saved1 = createAndSave();
+        final Generic saved2 = createAndSave();
+
+        final List<Generic> original = Arrays.asList(saved1, saved2);
+
+        final List<Generic> found = getTestDao().findAll();
+
+        for (int i = 0; i < original.size(); i++) {
+            assertSame(original.get(i), found.get(i));
+        }
+    }
+
+    protected Generic createAndSave()
+    {
+        final Generic original = createInstance();
+
+        return getTestDao().save(original);
+    }
+
+    protected abstract void assertSame(Generic expected, Generic actual);
 
     protected abstract Generic createInstance();
 }

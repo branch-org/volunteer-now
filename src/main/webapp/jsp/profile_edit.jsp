@@ -21,7 +21,7 @@
 <div class="container col-lg-pull-6">
     <h2>Profile</h2>
     Please enter profile information before continuing to VolunteerNow!
-    <form:form role="form" modelAttribute="myprofile" action="edit" method="post">
+    <form:form role="form" modelAttribute="memberProfile" action="edit" method="post">
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="email">Email address</label>
@@ -46,7 +46,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>

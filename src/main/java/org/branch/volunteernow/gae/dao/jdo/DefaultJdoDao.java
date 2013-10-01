@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.security.KeyFactory;
 import java.util.List;
 
 /**
@@ -56,32 +58,38 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
     @Override
     public T findById(Key id)
     {
-        final javax.jdo.Query query = getPersistenceManager().newQuery(MemberProfileImpl.class);
-        query.setFilter("id == key");
-        query.declareParameters(Key.class.getName() + " key");
+        final PersistenceManager pm = getPersistenceManager();
 
         try
         {
-            final List<T> results = (List<T>) query.execute(id);
-            if (!results.isEmpty())
-            {
-                return results.get(0);
-            }
-            else
-            {
-                return null;
-            }
+            return (T) pm.getObjectById(getPersistenceClass(), id);
         }
         finally
         {
-            query.closeAll();
+            pm.close();
         }
     }
-//
-//    public List<E> getAll(Class<E> clazz)
-//    {
-//        final javax.jdo.Query query = getPersistenceManager().newQuery(clazz);
-//
-//        return (List<E>) query.execute();
-//    }
+
+    @Override
+    public List<T> findAll()
+    {
+        return findAll(getPersistenceClass());
+    }
+
+    @Override
+    public List<T> findAll(Class<? extends T> clazz)
+    {
+        final PersistenceManager pm = getPersistenceManager();
+
+        try
+        {
+            final Query q = pm.newQuery(getPersistenceClass());
+
+            return (List<T>) q.execute();
+        }
+        finally
+        {
+            pm.close();
+        }
+    }
 }

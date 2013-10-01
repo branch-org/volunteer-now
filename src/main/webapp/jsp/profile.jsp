@@ -13,16 +13,15 @@
 
 <div class="container">
     <h2>Profile</h2>
-    ${myprofile.displayName}
+    ${memberProfile.displayName}
     <%@include file="footer.jsp" %>
 </div>
-<!-- /container -->
 
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>

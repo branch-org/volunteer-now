@@ -13,17 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractProfileDaoTest<Generic extends Profile, GenericDao extends ProfileDao<Generic>> extends AbstractDaoTest<Generic, GenericDao>
 {
     @Test
-    @Transactional
     public void findByEmail() {
-        final Profile original = createInstance();
+        final Generic saved = createAndSave();
 
-        final String email = original.getEmail();
+        final String email = saved.getEmail();
 
         Assert.assertNotNull(email);
 
-        final Profile found = getTestDao().findByEmail(email);
+        final Generic found = getTestDao().findByEmail(email);
 
         Assert.assertNotNull(found);
-        Assert.assertEquals(original.getId(), original.getId());
+        Assert.assertEquals(saved.getId(), saved.getId());
     }
 }
+
