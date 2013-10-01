@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Inheritance(strategy=InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class AbstractEntityImpl implements Serializable
 {
-    protected AbstractEntityImpl()
+    public AbstractEntityImpl()
     {
     }
 

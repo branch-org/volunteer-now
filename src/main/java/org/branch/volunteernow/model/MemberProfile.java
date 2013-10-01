@@ -9,4 +9,6 @@ import javax.jdo.annotations.PersistenceCapable;
 public interface MemberProfile extends Profile
 {
     String getFirstName();
+
+    void setFirstName(String bruce);
 }

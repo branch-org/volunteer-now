@@ -40,7 +40,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
+                                <li><a href="/members/profile">Profile</a></li>
                                 <li><a href="${logoutUrl}">Logout</a></li>
                             </ul>
                         </div>

@@ -41,11 +41,7 @@ import java.util.Map;
         {
             memberProfile = new MemberProfileImpl();
             memberProfile.setEmail(currentUser.getEmail());
-
-            return memberProfile;
         }
-
-        memberProfile.setEmail(currentUser.getEmail());
 
         return memberProfile;
     }
@@ -67,13 +63,13 @@ import java.util.Map;
     }
 
     @RequestMapping(value = URL_MEMBERS_PROFILE_EDIT, method = RequestMethod.POST)
-    public ModelAndView editPost(@ModelAttribute MemberProfileImpl memberProfile, BindingResult result, HttpServletRequest request)
+    public ModelAndView editPost(@ModelAttribute MemberProfile memberProfile, BindingResult result, HttpServletRequest request)
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
         profileDao.save(memberProfile);
 
-        return new ModelAndView(PAGE_MEMBERS_PROFILE, model);
+        return new ModelAndView(PAGE_MEMBERS_PROFILE);//, model);
     }
 }
 

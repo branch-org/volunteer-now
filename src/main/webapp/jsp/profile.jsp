@@ -13,6 +13,8 @@
 
 <div class="container">
     <h2>Profile</h2>
+    <a href="/members/profile/edit">[edit]</a>
+    <br/>
     ${memberProfile.displayName}
     <%@include file="footer.jsp" %>
 </div>

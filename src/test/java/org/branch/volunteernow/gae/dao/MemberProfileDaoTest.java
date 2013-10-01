@@ -4,6 +4,7 @@ import org.branch.volunteernow.dao.MemberProfileDao;
 import org.branch.volunteernow.model.MemberProfile;
 import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,6 +17,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
 public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile, MemberProfileDao<MemberProfile>>
 {
+    @Test
+    public void changeFirstName() {
+        final MemberProfile original = createAndSave();
+
+        original.setFirstName("Bruce");
+
+        final MemberProfile saved = getTestDao().save(original);
+
+        Assert.assertEquals(saved.getFirstName(), "Bruce");
+    }
+
     @Override
     protected void assertSame(MemberProfile expected, MemberProfile actual)
     {
