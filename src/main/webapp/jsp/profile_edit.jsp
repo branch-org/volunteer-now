@@ -22,7 +22,7 @@
     <h2>Profile</h2>
     Please enter profile information before continuing to VolunteerNow!
     <form:form role="form" modelAttribute="memberProfile" action="edit" method="post">
-        <input id="id" name="id" type="hidden" value="${id}"/>
+        <form:hidden path="id" />
 
         <div class="row">
             <div class="form-group col-md-6">

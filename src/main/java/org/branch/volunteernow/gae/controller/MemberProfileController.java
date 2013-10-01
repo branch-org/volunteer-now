@@ -27,6 +27,8 @@ import java.util.Map;
  public class MemberProfileController extends BaseController
 {
 
+
+
     @Autowired
     private MemberProfileDao<MemberProfile> profileDao;
 
