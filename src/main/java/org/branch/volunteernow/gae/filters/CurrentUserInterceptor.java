@@ -28,13 +28,14 @@ public class CurrentUserInterceptor extends DefaultInterceptor implements Handle
     {
         final String thisURL = request.getRequestURI();
 
+        // This ensures that the user has a profile that is filled out.
         if (!URL_PROFILE_EDIT.equals(thisURL))
         {
             final UserService userService = UserServiceFactory.getUserService();
             final User currentUser = userService.getCurrentUser();
             if (currentUser != null)
             {
-                final Profile profile = profileDao.getProfileForEmail(currentUser.getEmail());
+                final Profile profile = profileDao.findByEmail(currentUser.getEmail());
 
                 if (profile == null)
                 {
@@ -65,7 +66,6 @@ public class CurrentUserInterceptor extends DefaultInterceptor implements Handle
             }
             modelAndView.getModel().put("currentUser", currentUser);
         }
-
     }
 
     @Override

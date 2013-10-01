@@ -1,11 +1,7 @@
 package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.model.Profile;
-import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.branch.volunteernow.model.jdo.OrganizationProfile;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

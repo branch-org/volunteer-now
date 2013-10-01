@@ -9,5 +9,5 @@ import org.branch.volunteernow.model.Profile;
 //public interface ProfileDao<T extends Profile, E extends T> extends Dao<T, E>
 public interface ProfileDao extends Dao<Profile>
 {
-    <E extends Profile> E getProfileForEmail(String email);
+    <E extends Profile> E findByEmail(String email);
 }

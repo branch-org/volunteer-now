@@ -1,10 +1,7 @@
 package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.gae.dao.AbstractProfileDaoTest;
-import org.branch.volunteernow.model.Profile;
 import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,7 +22,9 @@ public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile>
     protected MemberProfile createInstance()
     {
         final MemberProfile memberProfile = new MemberProfile();
-        memberProfile.setName("Name1");
+        memberProfile.setFirstName("John");
+        memberProfile.setLastName("Daily");
+        memberProfile.setEmail("test@example.com");
 
         return memberProfile;
     }

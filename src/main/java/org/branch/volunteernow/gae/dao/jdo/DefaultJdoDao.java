@@ -1,13 +1,17 @@
 package org.branch.volunteernow.gae.dao.jdo;
 
+import com.google.appengine.api.datastore.Key;
 import org.branch.volunteernow.gae.dao.Dao;
 import org.branch.volunteernow.model.Entity;
+import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jdo.PersistenceManager;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
@@ -28,32 +32,43 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
     @Transactional(propagation = Propagation.REQUIRED)
     public <E extends T> E save(E object)
     {
-        return getPersistenceManager().makePersistent(object);
+        final PersistenceManager pm = getPersistenceManager();
+
+        try
+        {
+            return pm.makePersistent(object);
+        }
+        finally
+        {
+            pm.close();
+        }
     }
 
-//    public E get(Class<E> clazz, Key key)
-//    {
-//        final javax.jdo.Query query = getPersistenceManager().newQuery(clazz);
-//        query.setFilter("id == key");
-//        query.declareParameters(Key.class.getName() + " key");
-//
-//        try
-//        {
-//            final List<E> results = (List<E>) query.execute(key);
-//            if (!results.isEmpty())
-//            {
-//                return results.get(0);
-//            }
-//            else
-//            {
-//                return null;
-//            }
-//        }
-//        finally
-//        {
-//            query.closeAll();
-//        }
-//    }
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public <E extends T> E findById(Key id)
+    {
+        final javax.jdo.Query query = getPersistenceManager().newQuery(MemberProfile.class);
+        query.setFilter("id == key");
+        query.declareParameters(Key.class.getName() + " key");
+
+        try
+        {
+            final List<E> results = (List<E>) query.execute(id);
+            if (!results.isEmpty())
+            {
+                return results.get(0);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        finally
+        {
+            query.closeAll();
+        }
+    }
 //
 //    public List<E> getAll(Class<E> clazz)
 //    {

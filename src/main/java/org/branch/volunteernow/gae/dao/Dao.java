@@ -12,6 +12,8 @@ public interface Dao<T extends Entity>
 {
     <E extends T> E save(E entity);
 
+    <E extends T> E findById(Key id);
+
 //    <E extends T> List<E> getAll(Class<E> clazz);
 //
 //    <E extends T> E get(Class<E> clazz, Key id);

@@ -9,7 +9,6 @@ package org.branch.volunteernow.gae.controller;
  */
 
 import org.branch.volunteernow.gae.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
 import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,7 @@ public class MembersController
     public void add(@RequestParam String name)
     {
         final MemberProfile member = new MemberProfile();
-        member.setName(name);
+        member.setFirstName(name);
 
         membersDao.save(member);
     }

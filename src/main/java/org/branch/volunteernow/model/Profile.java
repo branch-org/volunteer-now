@@ -9,5 +9,8 @@ import javax.jdo.annotations.PersistenceCapable;
 @PersistenceCapable
 public interface Profile extends Entity
 {
-    String getName();
+    void setEmail(String inputEmail);
+    String getEmail();
+
+    String getDisplayName();
 }

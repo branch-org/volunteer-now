@@ -5,13 +5,15 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import org.branch.volunteernow.constants.PathConstants;
 import org.branch.volunteernow.gae.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,35 +23,56 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/profile")
-public class ProfileController implements PathConstants
+@Transactional
+ public class ProfileController implements PathConstants
 {
     @Autowired
     private ProfileDao profileDao;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView get()
+    @ModelAttribute("myprofile")
+    public MemberProfile getMemberProfile()
     {
         final UserService userService = UserServiceFactory.getUserService();
         final User currentUser = userService.getCurrentUser();
 
-        final Map<String, Object> model = new HashMap<String, Object>();
-
-        final Profile profile = profileDao.getProfileForEmail(currentUser.getEmail());
-        if (profile == null)
+        MemberProfile memberProfile = profileDao.findByEmail(currentUser.getEmail());
+        if (memberProfile == null)
         {
-            return new ModelAndView("redirect:" + URL_PROFILE_EDIT, model);
+            memberProfile = new MemberProfile();
+            memberProfile.setEmail(currentUser.getEmail());
+
+            return memberProfile;
         }
 
-        model.put("profile", profile);
+        memberProfile.setEmail(currentUser.getEmail());
+
+        return memberProfile;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView get()
+    {
+        final Map<String, Object> model = new HashMap<String, Object>();
 
         return new ModelAndView("profile", model);
     }
 
-    @RequestMapping(value ="edit", method = RequestMethod.GET)
-    public ModelAndView edit() {
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public ModelAndView editGet()
+    {
         final Map<String, Object> model = new HashMap<String, Object>();
 
         return new ModelAndView("profile_edit", model);
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public ModelAndView editPost(@ModelAttribute("myprofile") MemberProfile profile, BindingResult result, HttpServletRequest request)
+    {
+        final Map<String, Object> model = new HashMap<String, Object>();
+
+        profileDao.save(profile);
+
+        return new ModelAndView("profile", model);
     }
 }
 

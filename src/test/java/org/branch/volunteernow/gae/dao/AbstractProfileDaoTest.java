@@ -12,6 +12,7 @@ import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
@@ -23,5 +24,25 @@ public abstract class AbstractProfileDaoTest<T extends Profile> extends Abstract
     public void setProfileDao(ProfileDao profileDao)
     {
         super.setTestDao((Dao<T>) profileDao);
+    }
+
+    @Test
+    @Transactional
+    public void findByEmail() {
+        final T original = createInstance();
+
+        final String email = original.getEmail();
+
+        Assert.assertNotNull(email);
+
+        final T found = getProfileDao().findByEmail(email);
+
+        Assert.assertNotNull(found);
+        Assert.assertEquals(original.getId(), original.getId());
+    }
+
+    public ProfileDao getProfileDao()
+    {
+        return (ProfileDao) getTestDao();
     }
 }

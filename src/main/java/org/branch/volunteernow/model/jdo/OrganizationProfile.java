@@ -8,6 +8,7 @@ import javax.jdo.annotations.*;
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
+//@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @PersistenceCapable
 @Inheritance(strategy=InheritanceStrategy.NEW_TABLE)
 public class OrganizationProfile extends AbstractEntity implements Profile
@@ -15,12 +16,15 @@ public class OrganizationProfile extends AbstractEntity implements Profile
     @Persistent
     private String name;
 
-    public OrganizationProfile()
-    {
-    }
+    @Persistent
+    private String email;
 
     @Persistent
     private String mission;
+
+    public OrganizationProfile()
+    {
+    }
 
     public String getMission()
     {
@@ -40,5 +44,22 @@ public class OrganizationProfile extends AbstractEntity implements Profile
     public String getName()
     {
         return name;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    @Override
+    public String getEmail()
+    {
+        return this.email;
+    }
+
+    @Override
+    public String getDisplayName()
+    {
+        return getName();
     }
 }

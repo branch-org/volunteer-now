@@ -2,8 +2,11 @@ package org.branch.volunteernow.gae.dao.jdo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
+import sun.rmi.transport.ObjectTable;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -22,6 +25,7 @@ public abstract class AbstractJdoDao
 
     protected PersistenceManager getPersistenceManager()
     {
+//        return JDOHelper.getPersistenceManagerFactory("persistence-unit").getPersistenceManager();
         return persistenceManagerFactoryBean.getObject().getPersistenceManager();
     }
 }

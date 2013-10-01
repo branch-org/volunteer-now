@@ -21,6 +21,11 @@ public abstract class AbstractDaoTest<T extends Entity>
         this.testDao = testDao;
     }
 
+    protected Dao<T> getTestDao()
+    {
+        return testDao;
+    }
+
     @Before
     public void setUp()
     {
@@ -44,6 +49,25 @@ public abstract class AbstractDaoTest<T extends Entity>
         Assert.assertEquals(original, saved);
 
         assertSave(original, saved);
+    }
+
+    @Test
+    public void expiration()
+    {
+        final T original = createInstance();
+        final T saved = testDao.save(original);
+
+        // This was throwing, "Object with id ... is managed by a different Object Manager"
+        // This test is made to exercise cross transaction saves
+        testDao.save(saved);
+    }
+
+    @Test
+    public void findById() {
+        final T original = createInstance();
+        final T saved = testDao.save(original);
+
+        final T found = testDao.findById(saved.getId());
     }
 
     protected abstract void assertSave(T original, T saved);

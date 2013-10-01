@@ -13,6 +13,7 @@
 
 <div class="container">
     <h2>Profile</h2>
+    ${myprofile.displayName}
     <%@include file="footer.jsp" %>
 </div>
 <!-- /container -->
