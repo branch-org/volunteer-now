@@ -1,6 +1,8 @@
 package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.model.jdo.OrganizationProfile;
+import org.branch.volunteernow.dao.OrganizationProfileDao;
+import org.branch.volunteernow.model.OrganizationProfile;
+import org.branch.volunteernow.gae.model.jdo.OrganizationProfileImpl;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -11,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
-public class OrganizationProfileDaoTest extends AbstractProfileDaoTest<OrganizationProfile>
+public class OrganizationProfileDaoTest extends AbstractDaoTest<OrganizationProfile, OrganizationProfileDao<OrganizationProfile>>
 {
     @Override
     protected void assertSave(OrganizationProfile original, OrganizationProfile saved)
@@ -21,10 +23,10 @@ public class OrganizationProfileDaoTest extends AbstractProfileDaoTest<Organizat
     @Override
     protected OrganizationProfile createInstance()
     {
-        final OrganizationProfile profile = new OrganizationProfile();
+        final OrganizationProfileImpl profile = new OrganizationProfileImpl();
         profile.setName("Name1");
         profile.setMission("Mission1");
 
-        return profile;
+        return (OrganizationProfile) profile;
     }
 }

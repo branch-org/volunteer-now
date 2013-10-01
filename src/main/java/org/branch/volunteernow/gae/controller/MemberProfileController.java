@@ -4,8 +4,9 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import org.branch.volunteernow.constants.PathConstants;
-import org.branch.volunteernow.gae.dao.ProfileDao;
-import org.branch.volunteernow.model.jdo.MemberProfile;
+import org.branch.volunteernow.dao.MemberProfileDao;
+import org.branch.volunteernow.model.MemberProfile;
+import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +23,14 @@ import java.util.Map;
  * @since 8/15/13
  */
 @Controller
-@RequestMapping("/profile")
 @Transactional
- public class ProfileController implements PathConstants
+ public class MemberProfileController extends BaseController
 {
-    @Autowired
-    private ProfileDao profileDao;
 
-    @ModelAttribute("myprofile")
+    @Autowired
+    private MemberProfileDao<MemberProfile> profileDao;
+
+    @ModelAttribute
     public MemberProfile getMemberProfile()
     {
         final UserService userService = UserServiceFactory.getUserService();
@@ -38,7 +39,7 @@ import java.util.Map;
         MemberProfile memberProfile = profileDao.findByEmail(currentUser.getEmail());
         if (memberProfile == null)
         {
-            memberProfile = new MemberProfile();
+            memberProfile = new MemberProfileImpl();
             memberProfile.setEmail(currentUser.getEmail());
 
             return memberProfile;
@@ -49,30 +50,30 @@ import java.util.Map;
         return memberProfile;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView get()
+    @RequestMapping(value = URL_MEMBERS_PROFILE, method = RequestMethod.GET)
+    public ModelAndView profileGet()
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
-        return new ModelAndView("profile", model);
+        return new ModelAndView(PAGE_MEMBERS_PROFILE_EDIT, model);
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    @RequestMapping(value = URL_MEMBERS_PROFILE_EDIT, method = RequestMethod.GET)
     public ModelAndView editGet()
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
-        return new ModelAndView("profile_edit", model);
+        return new ModelAndView(PAGE_MEMBERS_PROFILE_EDIT, model);
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public ModelAndView editPost(@ModelAttribute("myprofile") MemberProfile profile, BindingResult result, HttpServletRequest request)
+    @RequestMapping(value = URL_MEMBERS_PROFILE_EDIT, method = RequestMethod.POST)
+    public ModelAndView editPost(@ModelAttribute MemberProfileImpl memberProfile, BindingResult result, HttpServletRequest request)
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
-        profileDao.save(profile);
+        profileDao.save(memberProfile);
 
-        return new ModelAndView("profile", model);
+        return new ModelAndView(PAGE_MEMBERS_PROFILE, model);
     }
 }
 

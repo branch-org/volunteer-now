@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/debug")
-public class DebugController {
+public class DebugController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/ping")
     public String pong() {

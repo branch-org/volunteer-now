@@ -1,4 +1,4 @@
-package org.branch.volunteernow.model.jdo;
+package org.branch.volunteernow.gae.model.jdo;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -12,9 +12,9 @@ import java.io.Serializable;
 //@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @PersistenceCapable
 @Inheritance(strategy=InheritanceStrategy.SUBCLASS_TABLE)
-public abstract class AbstractEntity implements Serializable
+public abstract class AbstractEntityImpl implements Serializable
 {
-    protected AbstractEntity()
+    protected AbstractEntityImpl()
     {
     }
 

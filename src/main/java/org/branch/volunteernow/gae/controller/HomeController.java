@@ -1,5 +1,6 @@
 package org.branch.volunteernow.gae.controller;
 
+import org.branch.volunteernow.constants.PathConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,13 +15,13 @@ import java.util.Map;
  * @since 8/15/13
  */
 @Controller
-public class DefaultController
+public class HomeController extends BaseController
 {
-    @RequestMapping("/")
-    public ModelAndView root(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(URL_HOME)
+    public ModelAndView homeGet(HttpServletRequest request, HttpServletResponse response)
     {
         final Map<String, Object> model = new HashMap<String, Object>();
 
-        return new ModelAndView("index", model);
+        return new ModelAndView(PAGE_HOME, model);
     }
 }

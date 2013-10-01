@@ -2,26 +2,29 @@ package org.branch.volunteernow.gae.dao;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import org.branch.volunteernow.dao.Dao;
 import org.branch.volunteernow.model.Entity;
 
 import org.junit.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public abstract class AbstractDaoTest<T extends Entity>
+public abstract class AbstractDaoTest<Generic extends Entity, GenericDao extends Dao<Generic>>
 {
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 
-    private Dao<T> testDao;
+    private GenericDao testDao;
 
-    protected void setTestDao(Dao<T> testDao)
+    @Autowired
+    protected void setTestDao(GenericDao testDao)
     {
         this.testDao = testDao;
     }
 
-    protected Dao<T> getTestDao()
+    protected GenericDao getTestDao()
     {
         return testDao;
     }
@@ -41,8 +44,8 @@ public abstract class AbstractDaoTest<T extends Entity>
     @Test
     public void save()
     {
-        final T original = createInstance();
-        final T saved = testDao.save(original);
+        final Generic original = createInstance();
+        final Generic saved = getTestDao().save(original);
 
         Assert.assertNotNull(saved);
         Assert.assertNotNull(saved.getId());
@@ -54,8 +57,8 @@ public abstract class AbstractDaoTest<T extends Entity>
     @Test
     public void expiration()
     {
-        final T original = createInstance();
-        final T saved = testDao.save(original);
+        final Generic original = createInstance();
+        final Generic saved = getTestDao().save(original);
 
         // This was throwing, "Object with id ... is managed by a different Object Manager"
         // This test is made to exercise cross transaction saves
@@ -64,13 +67,13 @@ public abstract class AbstractDaoTest<T extends Entity>
 
     @Test
     public void findById() {
-        final T original = createInstance();
-        final T saved = testDao.save(original);
+        final Generic original = createInstance();
+        final Generic saved = getTestDao().save(original);
 
-        final T found = testDao.findById(saved.getId());
+        final Generic found = getTestDao().findById(saved.getId());
     }
 
-    protected abstract void assertSave(T original, T saved);
+    protected abstract void assertSave(Generic original, Generic saved);
 
-    protected abstract T createInstance();
+    protected abstract Generic createInstance();
 }

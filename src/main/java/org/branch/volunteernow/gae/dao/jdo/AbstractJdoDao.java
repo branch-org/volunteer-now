@@ -15,17 +15,11 @@ import java.lang.reflect.ParameterizedType;
  */
 public abstract class AbstractJdoDao
 {
-    private LocalPersistenceManagerFactoryBean persistenceManagerFactoryBean;
 
-    @Autowired
-    protected AbstractJdoDao(LocalPersistenceManagerFactoryBean persistenceManagerFactory)
-    {
-        this.persistenceManagerFactoryBean = persistenceManagerFactory;
-    }
+    public static final String PERSISTENCE_UNIT = "persistence-unit";
 
     protected PersistenceManager getPersistenceManager()
     {
-//        return JDOHelper.getPersistenceManagerFactory("persistence-unit").getPersistenceManager();
-        return persistenceManagerFactoryBean.getObject().getPersistenceManager();
+        return JDOHelper.getPersistenceManagerFactory(PERSISTENCE_UNIT).getPersistenceManager();
     }
 }

@@ -4,8 +4,8 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import org.branch.volunteernow.constants.PathConstants;
-import org.branch.volunteernow.gae.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.dao.MemberProfileDao;
+import org.branch.volunteernow.model.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +20,13 @@ import java.util.Map;
  * @since 8/15/13
  */
 @Controller
-@RequestMapping("/login")
-public class LogInController implements PathConstants
+public class LogInController extends BaseController
 {
     @Autowired
-    private ProfileDao profileDao;
+    private MemberProfileDao<MemberProfile> profileDao;
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView login()
+    @RequestMapping(value = URL_LOGIN, method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView loginGet()
     {
         final UserService userService = UserServiceFactory.getUserService();
         final User currentUser = userService.getCurrentUser();
@@ -36,17 +35,15 @@ public class LogInController implements PathConstants
 
         if (currentUser == null)
         {
-            return new ModelAndView("login", model);
+            return new ModelAndView(PAGE_LOGIN, model);
         }
 
-        final Profile profile = profileDao.findByEmail(currentUser.getEmail());
+        final MemberProfile profile = profileDao.findByEmail(currentUser.getEmail());
         if (profile == null)
         {
-            return new ModelAndView("redirect:" + URL_PROFILE_EDIT, model);
+            return new ModelAndView(redirect(URL_MEMBERS_PROFILE_EDIT), model);
         }
 
-        model.put("profile", profile);
-
-        return new ModelAndView("redirect:/", model);
+        return new ModelAndView(redirect(URL_HOME), model);
     }
 }

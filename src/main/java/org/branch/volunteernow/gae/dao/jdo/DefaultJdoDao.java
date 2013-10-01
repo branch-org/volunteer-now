@@ -1,9 +1,9 @@
 package org.branch.volunteernow.gae.dao.jdo;
 
 import com.google.appengine.api.datastore.Key;
-import org.branch.volunteernow.gae.dao.Dao;
+import org.branch.volunteernow.dao.Dao;
 import org.branch.volunteernow.model.Entity;
-import org.branch.volunteernow.model.jdo.MemberProfile;
+import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.transaction.annotation.Propagation;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.jdo.PersistenceManager;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -19,18 +20,25 @@ import java.util.List;
  */
 public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements Dao<T>
 {
-    private final Class<T> persistentClass;
+    private final Class<T> persistenceClass;
 
     @Autowired
-    public DefaultJdoDao(LocalPersistenceManagerFactoryBean persistenceManagerFactory)
+    public DefaultJdoDao()
     {
-        super(persistenceManagerFactory);
+        final Type genericSuperclass = getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass1 = (ParameterizedType) genericSuperclass;
+        final Type[] actualTypeArguments = genericSuperclass1.getActualTypeArguments();
 
-        persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        persistenceClass = (Class<T>) actualTypeArguments[0];
+    }
+
+    protected Class<T> getPersistenceClass()
+    {
+        return persistenceClass;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public <E extends T> E save(E object)
+    public T save(T object)
     {
         final PersistenceManager pm = getPersistenceManager();
 
@@ -46,15 +54,15 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public <E extends T> E findById(Key id)
+    public T findById(Key id)
     {
-        final javax.jdo.Query query = getPersistenceManager().newQuery(MemberProfile.class);
+        final javax.jdo.Query query = getPersistenceManager().newQuery(MemberProfileImpl.class);
         query.setFilter("id == key");
         query.declareParameters(Key.class.getName() + " key");
 
         try
         {
-            final List<E> results = (List<E>) query.execute(id);
+            final List<T> results = (List<T>) query.execute(id);
             if (!results.isEmpty())
             {
                 return results.get(0);

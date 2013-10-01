@@ -1,13 +1,13 @@
-package org.branch.volunteernow.model.jdo;
+package org.branch.volunteernow.gae.model.jdo;
 
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.model.MemberProfile;
 
 import javax.jdo.annotations.*;
 
 //@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-public class MemberProfile extends AbstractEntity implements Profile
+public class MemberProfileImpl extends AbstractEntityImpl implements MemberProfile
 {
     @Persistent
     @Unique
@@ -19,7 +19,7 @@ public class MemberProfile extends AbstractEntity implements Profile
     @Persistent
     private String firstName;
 
-    public MemberProfile()
+    public MemberProfileImpl()
     {
     }
 

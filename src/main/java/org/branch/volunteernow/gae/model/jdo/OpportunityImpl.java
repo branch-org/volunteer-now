@@ -1,10 +1,10 @@
-package org.branch.volunteernow.model.jdo;
+package org.branch.volunteernow.gae.model.jdo;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public class Opportunity
+public class OpportunityImpl
 {
     private final String description;
 
@@ -14,7 +14,7 @@ public class Opportunity
 
     private final String title;
 
-    public Opportunity(String title, String organization, String location, String description)
+    public OpportunityImpl(String title, String organization, String location, String description)
     {
         this.title = title;
         this.organization = organization;

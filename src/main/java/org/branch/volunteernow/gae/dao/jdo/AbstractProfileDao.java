@@ -1,9 +1,7 @@
 package org.branch.volunteernow.gae.dao.jdo;
 
-import org.branch.volunteernow.gae.dao.ProfileDao;
+import org.branch.volunteernow.dao.ProfileDao;
 import org.branch.volunteernow.model.Profile;
-import org.branch.volunteernow.model.jdo.AbstractEntity;
-import org.branch.volunteernow.model.jdo.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -12,30 +10,22 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.List;
 
-@Repository
-public class ProfileJdoDao extends DefaultJdoDao<Profile> implements ProfileDao
+public abstract class AbstractProfileDao<T extends Profile> extends DefaultJdoDao<T> implements ProfileDao<T>
 {
-    @Autowired
-    public ProfileJdoDao(LocalPersistenceManagerFactoryBean persistenceManagerFactory)
-    {
-        super(persistenceManagerFactory);
-    }
-
     @Override
-    public <E extends Profile> E findByEmail(String e)
+    public T findByEmail(String e)
     {
         final PersistenceManager pm = getPersistenceManager();
-        final Query q = pm.newQuery(MemberProfile.class);
+        final Query q = pm.newQuery(getPersistenceClass());
 //        q.setFilter("email == e");
 //        q.declareParameters("String e");
 
         try
         {
-//            final List<MemberProfile> results = (List<MemberProfile>) q.execute(e);
-            final List<MemberProfile> results = (List<MemberProfile>) q.execute();
+            final List<T> results = (List<T>) q.execute();
             if (!results.isEmpty())
             {
-                return (E) results.get(0);
+                return (T) results.get(0);
             }
             else
             {
@@ -45,7 +35,7 @@ public class ProfileJdoDao extends DefaultJdoDao<Profile> implements ProfileDao
         finally
         {
             q.closeAll();
-//            pm.close();
+            pm.close();
         }
     }
 }
