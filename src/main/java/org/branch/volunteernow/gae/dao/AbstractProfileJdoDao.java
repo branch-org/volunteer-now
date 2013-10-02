@@ -1,15 +1,13 @@
-package org.branch.volunteernow.gae.dao.jdo;
+package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.gae.model.Profile;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.List;
 
-public abstract class AbstractProfileDao<T extends Profile> extends DefaultJdoDao<T> implements ProfileDao<T>
+public abstract class AbstractProfileJdoDao<T extends Profile> extends DefaultJdoDao<T>
 {
-    @Override
     public T findByEmail(String email)
     {
         final PersistenceManager pm = getPersistenceManager();

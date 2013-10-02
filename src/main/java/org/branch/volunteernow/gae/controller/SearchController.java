@@ -1,6 +1,6 @@
 package org.branch.volunteernow.gae.controller;
 
-import org.branch.volunteernow.gae.model.jdo.OpportunityImpl;
+import org.branch.volunteernow.gae.model.Opportunity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,13 +25,13 @@ public class SearchController extends BaseController
 
         model.put("searchInput", searchInput);
         model.put("searchResults", new ArrayList(Arrays.asList(
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf"),
-                new OpportunityImpl("asdf", "asdf", "asdf", "asdf")
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf"),
+                new Opportunity("asdf", "asdf", "asdf", "asdf")
         )));
 
         return new ModelAndView("search", model);

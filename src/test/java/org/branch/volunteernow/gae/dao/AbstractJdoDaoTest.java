@@ -2,10 +2,10 @@ package org.branch.volunteernow.gae.dao;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import org.branch.volunteernow.dao.Dao;
-import org.branch.volunteernow.model.Entity;
+import org.branch.volunteernow.gae.model.AbstractEntity;
 
 import org.junit.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public abstract class AbstractDaoTest<Generic extends Entity, GenericDao extends Dao<Generic>>
+public abstract class AbstractJdoDaoTest<Generic extends AbstractEntity, GenericDao extends DefaultJdoDao<Generic>>
 {
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 //    private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalMemcacheServiceTestConfig());

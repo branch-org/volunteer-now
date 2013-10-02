@@ -3,10 +3,10 @@ package org.branch.volunteernow.gae.filters;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import org.apache.log4j.Logger;
 import org.branch.volunteernow.constants.PathConstants;
-import org.branch.volunteernow.dao.MemberProfileDao;
-import org.branch.volunteernow.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.gae.dao.MemberProfileJdoDao;
+import org.branch.volunteernow.gae.model.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CurrentUserInterceptor extends DefaultInterceptor implements HandlerInterceptor, PathConstants
 {
 
+    private static final Logger log = Logger.getLogger(CurrentUserInterceptor.class);
+
     @Autowired
-    private MemberProfileDao profileDao;
+    private MemberProfileJdoDao<MemberProfile> profileDao;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
@@ -36,7 +38,7 @@ public class CurrentUserInterceptor extends DefaultInterceptor implements Handle
             final User currentUser = userService.getCurrentUser();
             if (currentUser != null)
             {
-                final Profile profile = profileDao.findByEmail(currentUser.getEmail());
+                final MemberProfile profile = profileDao.findByEmail(currentUser.getEmail());
 
                 if (profile == null)
                 {

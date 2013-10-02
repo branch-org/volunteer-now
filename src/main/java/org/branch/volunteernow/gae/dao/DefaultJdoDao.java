@@ -1,11 +1,8 @@
-package org.branch.volunteernow.gae.dao.jdo;
+package org.branch.volunteernow.gae.dao;
 
 import com.google.appengine.api.datastore.Key;
-import org.branch.volunteernow.dao.Dao;
-import org.branch.volunteernow.model.Entity;
-import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
+import org.branch.volunteernow.gae.model.AbstractEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +10,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.security.KeyFactory;
 import java.util.List;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements Dao<T>
+public class DefaultJdoDao<T extends AbstractEntity> extends AbstractJdoDao
 {
     private final Class<T> persistenceClass;
 
@@ -28,8 +24,16 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
     public DefaultJdoDao()
     {
         final Type genericSuperclass = getClass().getGenericSuperclass();
-        final ParameterizedType genericSuperclass1 = (ParameterizedType) genericSuperclass;
-        final Type[] actualTypeArguments = genericSuperclass1.getActualTypeArguments();
+        final ParameterizedType parameterizedType;
+        if (genericSuperclass instanceof ParameterizedType) {
+            parameterizedType = (ParameterizedType) genericSuperclass;
+        } else if (genericSuperclass instanceof Class) {
+            parameterizedType = (ParameterizedType) ((Class<T>) genericSuperclass).getGenericSuperclass();
+        } else {
+            throw new RuntimeException("The DAO isn't properly parametrized.  Please see examples and fix hierarchy.");
+        }
+
+        final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
 
         persistenceClass = (Class<T>) actualTypeArguments[0];
     }
@@ -55,7 +59,6 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    @Override
     public T findById(Key id)
     {
         final PersistenceManager pm = getPersistenceManager();
@@ -70,13 +73,11 @@ public class DefaultJdoDao<T extends Entity> extends AbstractJdoDao implements D
         }
     }
 
-    @Override
     public List<T> findAll()
     {
         return findAll(getPersistenceClass());
     }
 
-    @Override
     public List<T> findAll(Class<? extends T> clazz)
     {
         final PersistenceManager pm = getPersistenceManager();

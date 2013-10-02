@@ -14,10 +14,10 @@ public interface PathConstants
     static final String URL_SEARCH                      = "/search";
 
     static final String URL_MEMBERS_PROFILE             = URL_MEMBERS+ "/profile";
-    static final String PAGE_MEMBERS_PROFILE            = "/profile";
+    static final String PAGE_MEMBERS_PROFILE            = "profile";
 
     static final String URL_MEMBERS_PROFILE_EDIT        = URL_MEMBERS_PROFILE + "/edit";
-    static final String PAGE_MEMBERS_PROFILE_EDIT       = "/profile_edit";
+    static final String PAGE_MEMBERS_PROFILE_EDIT       = "profile_edit";
 
     static final String URL_LOGIN                       = "/login";
     static final String PAGE_LOGIN                      = "login";

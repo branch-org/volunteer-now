@@ -1,6 +1,4 @@
-package org.branch.volunteernow.gae.model.jdo;
-
-import org.branch.volunteernow.model.OrganizationProfile;
+package org.branch.volunteernow.gae.model;
 
 import javax.jdo.annotations.*;
 
@@ -10,18 +8,15 @@ import javax.jdo.annotations.*;
  */
 @PersistenceCapable
 @Inheritance(strategy=InheritanceStrategy.NEW_TABLE)
-public class OrganizationProfileImpl extends AbstractEntityImpl implements OrganizationProfile
+public class OrganizationProfile extends Profile
 {
     @Persistent
     private String name;
 
     @Persistent
-    private String email;
-
-    @Persistent
     private String mission;
 
-    public OrganizationProfileImpl()
+    public OrganizationProfile()
     {
     }
 
@@ -43,22 +38,5 @@ public class OrganizationProfileImpl extends AbstractEntityImpl implements Organ
     public String getName()
     {
         return name;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    @Override
-    public String getEmail()
-    {
-        return this.email;
-    }
-
-    @Override
-    public String getDisplayName()
-    {
-        return getName();
     }
 }

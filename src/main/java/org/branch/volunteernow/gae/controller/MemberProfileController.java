@@ -3,10 +3,8 @@ package org.branch.volunteernow.gae.controller;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import org.branch.volunteernow.constants.PathConstants;
-import org.branch.volunteernow.dao.MemberProfileDao;
-import org.branch.volunteernow.model.MemberProfile;
-import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
+import org.branch.volunteernow.gae.dao.MemberProfileJdoDao;
+import org.branch.volunteernow.gae.model.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +25,8 @@ import java.util.Map;
  public class MemberProfileController extends BaseController
 {
 
-
-
     @Autowired
-    private MemberProfileDao<MemberProfile> profileDao;
+    private MemberProfileJdoDao<MemberProfile> profileDao;
 
     @ModelAttribute
     public MemberProfile getMemberProfile()
@@ -41,7 +37,7 @@ import java.util.Map;
         MemberProfile memberProfile = profileDao.findByEmail(currentUser.getEmail());
         if (memberProfile == null)
         {
-            memberProfile = new MemberProfileImpl();
+            memberProfile = new MemberProfile();
             memberProfile.setEmail(currentUser.getEmail());
         }
 

@@ -1,8 +1,6 @@
 package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.dao.MemberProfileDao;
-import org.branch.volunteernow.model.MemberProfile;
-import org.branch.volunteernow.gae.model.jdo.MemberProfileImpl;
+import org.branch.volunteernow.gae.model.MemberProfile;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
-public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile, MemberProfileDao<MemberProfile>>
+public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile, MemberProfileJdoDao<MemberProfile>>
 {
     @Test
     public void changeFirstName() {
@@ -37,10 +35,14 @@ public class MemberProfileDaoTest extends AbstractProfileDaoTest<MemberProfile, 
     @Override
     protected MemberProfile createInstance()
     {
-        final MemberProfileImpl memberProfile = new MemberProfileImpl();
+        final MemberProfile memberProfile = new MemberProfile();
         memberProfile.setFirstName("John");
         memberProfile.setLastName("Daily");
         memberProfile.setEmail("test@example.com");
+
+        memberProfile.getPrimaryAddress().setCity("Nürnberg");
+        memberProfile.getPrimaryAddress().setState("Bayern");
+        memberProfile.getPrimaryAddress().setCountry("Deustchland");
 
         return (MemberProfile) memberProfile;
     }

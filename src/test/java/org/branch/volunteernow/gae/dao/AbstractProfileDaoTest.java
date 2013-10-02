@@ -1,16 +1,13 @@
 package org.branch.volunteernow.gae.dao;
 
-import org.branch.volunteernow.dao.ProfileDao;
-import org.branch.volunteernow.model.Profile;
+import org.branch.volunteernow.gae.model.Profile;
 import org.junit.*;
-
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Thomas Beauvais <thomas.beauvais@silbury.de>
  * @since 8/15/13
  */
-public abstract class AbstractProfileDaoTest<Generic extends Profile, GenericDao extends ProfileDao<Generic>> extends AbstractDaoTest<Generic, GenericDao>
+public abstract class AbstractProfileDaoTest<Generic extends Profile, GenericDao extends AbstractProfileJdoDao<Generic>> extends AbstractJdoDaoTest<Generic, GenericDao>
 {
     @Test
     public void findByEmail() {

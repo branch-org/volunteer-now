@@ -3,9 +3,8 @@ package org.branch.volunteernow.gae.controller;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import org.branch.volunteernow.constants.PathConstants;
-import org.branch.volunteernow.dao.MemberProfileDao;
-import org.branch.volunteernow.model.MemberProfile;
+import org.branch.volunteernow.gae.dao.MemberProfileJdoDao;
+import org.branch.volunteernow.gae.model.MemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class LogInController extends BaseController
 {
     @Autowired
-    private MemberProfileDao<MemberProfile> profileDao;
+    private MemberProfileJdoDao<MemberProfile> profileDao;
 
     @RequestMapping(value = URL_LOGIN, method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView loginGet()

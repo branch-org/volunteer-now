@@ -31,12 +31,26 @@
             </div>
         </div>
         <div class="row">
+            <h3>Personal</h3>
             <div class="form-group col-md-3">
                 <label for="firstName">First name</label>
                 <form:input path="firstName" type="text" class="form-control" id="firstName"/>
 
                 <label for="lastName">Last name</label>
                 <form:input path="lastName" type="text" class="form-control" id="lastName"/>
+            </div>
+        </div>
+        <div class="row">
+            <h3>Primary Location</h3>
+            <div class="form-group col-md-3">
+                <label for="primaryAddress.city">City</label>
+                <form:input path="primaryAddress.city" type="text" class="form-control" id="primaryAddress.city"/>
+
+                <label for="primaryAddress.state">State</label>
+                <form:input path="primaryAddress.state" type="text" class="form-control" id="primaryAddress.state"/>
+
+                <label for="primaryAddress.country">Country</label>
+                <form:input path="primaryAddress.country" type="text" class="form-control" id="primaryAddress.country"/>
             </div>
         </div>
         <button type="submit" class="btn btn-default">Save</button>

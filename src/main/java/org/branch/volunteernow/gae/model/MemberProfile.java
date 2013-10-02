@@ -1,11 +1,9 @@
-package org.branch.volunteernow.gae.model.jdo;
-
-import org.branch.volunteernow.model.MemberProfile;
+package org.branch.volunteernow.gae.model;
 
 import javax.jdo.annotations.*;
 
 @PersistenceCapable
-public class MemberProfileImpl extends AbstractEntityImpl implements MemberProfile
+public class MemberProfile extends Profile
 {
     @Persistent
     private String email;
@@ -16,7 +14,10 @@ public class MemberProfileImpl extends AbstractEntityImpl implements MemberProfi
     @Persistent
     private String firstName;
 
-    public MemberProfileImpl()
+    @Persistent(dependent = "true", defaultFetchGroup="true")
+    private Address primaryAddress = new Address();
+
+    public MemberProfile()
     {
     }
 
@@ -45,15 +46,23 @@ public class MemberProfileImpl extends AbstractEntityImpl implements MemberProfi
         return lastName;
     }
 
-    @Override
     public String getEmail()
     {
         return email;
     }
 
-    @Override
     public String getDisplayName()
     {
         return getFirstName();
+    }
+
+    public Address getPrimaryAddress()
+    {
+        return primaryAddress;
+    }
+
+    public void setPrimaryAddress(Address primaryAddress)
+    {
+        this.primaryAddress = primaryAddress;
     }
 }
